@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: taskmanager
-        image: flink:latest
+        image: docker.nextop.cn/flink:1.9.1
         workingDir: /opt/flink
         command: ["/bin/bash", "-c", "$FLINK_HOME/bin/taskmanager.sh start; \
           while :;
