@@ -35,7 +35,7 @@ drop_privs_cmd() {
     fi
 }
 
-# Add for HA 
+# Add for HA
 echo "high-availability: ${HIGH_AVAILABILITY}" >> "${CONF_FILE}"
 echo "high-availability.zookeeper.quorum: ${HIGH_AVAILABILITY_ZOOKEEPER_QUORUM}" >> "${CONF_FILE}"
 echo "high-availability.zookeeper.path.root: ${HIGH_AVAILABILITY_ZOOKEEPER_PATH_ROOT}" >> "${CONF_FILE}"
@@ -65,6 +65,10 @@ elif [ "$1" = "jobmanager" ]; then
         sed -i -e "s/query\.server\.port:.*/query.server.port: 6125/g" "${CONF_FILE}"
     else
         echo "query.server.port: 6125" >> "${CONF_FILE}"
+    fi
+
+    if [ -n "${FLINK_PROPERTIES}" ]; then
+        echo "${FLINK_PROPERTIES}" >> "${CONF_FILE}"
     fi
 
     echo "config file: " && grep '^[^\n#]' "${CONF_FILE}"
@@ -97,6 +101,10 @@ elif [ "$1" = "taskmanager" ]; then
         sed -i -e "s/query\.server\.port:.*/query.server.port: 6125/g" "${CONF_FILE}"
     else
         echo "query.server.port: 6125" >> "${CONF_FILE}"
+    fi
+
+    if [ -n "${FLINK_PROPERTIES}" ]; then
+        echo "${FLINK_PROPERTIES}" >> "${CONF_FILE}"
     fi
 
     echo "config file: " && grep '^[^\n#]' "${CONF_FILE}"
